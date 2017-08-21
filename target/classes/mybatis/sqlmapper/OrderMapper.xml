@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.shop.web.mapper.OrderMapper" >
+
+  <resultMap id="BaseOrderResultMap" type="com.shop.web.entity.Order" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="buyer_name" property="buyerName" jdbcType="VARCHAR" />
+    <result column="buyer_phone" property="buyerPhone" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="total_price" property="totalPrice" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <association property="orderDetailCount" column="{sid = id}" javaType="java.lang.Integer" select="selectOrderDetailCount"/>
+  </resultMap>
+ 
+ <select id="listOrder" resultMap="BaseOrderResultMap">
+ SELECT * FROM  `order`
+ <if test="status != null">
+ where status = #{status}
+ </if>
+ ORDER BY update_time DESC
+ </select>
+ 
+  <select id="selectOrderDetailCount" resultType="java.lang.Integer">
+  SELECT COUNT(*) AS orderDetailCount FROM  `order_item`  WHERE order_id = #{sid}
+  </select>
+ 
+  <insert id="insertOrder" parameterType="com.shop.web.entity.Order" >
+    INSERT INTO `order`
+            (
+             `buyer_name`,
+             `buyer_phone`,
+             `address`,
+             `note`,
+             `status`,
+             `total_price`,
+             `update_time`,
+             `create_time`,
+             `month_date`)
+VALUES (
+        #{buyerName},
+        #{buyerPhone},
+        #{address},
+        #{note},
+        #{status},
+        #{totalPrice},
+        #{updateTime},
+        #{createTime},
+        from_unixtime(#{createTime}/1000,'%Y%m'));
+  </insert>
+  
+  <delete id="deleteOrder">
+  DELETE
+FROM `shot`.`order`
+WHERE `id` = #{orderId}
+  </delete>
+
+<select id="getOrderById" resultType="com.shop.web.entity.Order">
+SELECT * FROM `order` WHERE id = #{orderId}
+</select>
+
+<update id="updateOrder" parameterType="com.shop.web.entity.Order">
+UPDATE `order`
+SET 
+  `buyer_name` = #{buyerName},
+  `buyer_phone` = #{buyerPhone},
+  `address` = #{address},
+  `note` = #{note},
+  `status` = #{status},
+  `total_price` = #{totalPrice},
+  `update_time` = #{updateTime}
+WHERE `id` = #{id};
+</update>
+
+<select id="selectMonthTheSales" resultType="com.shop.web.entity.Order">
+SELECT
+	COUNT(month_date) countNum,
+	SUM(total_price) countPrice,
+	month_date monthDate
+FROM
+	`order` where month_date in 
+	 <foreach collection="list" item="monthDate" index="index"
+            open="(" close=")" separator=",">
+            #{monthDate}
+        </foreach>
+GROUP BY
+	month_date
+</select>
+
+</mapper>
