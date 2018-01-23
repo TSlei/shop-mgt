@@ -63,12 +63,20 @@
                       <div class="row margin-bottom-20">
 						<div class="col-md-4 no-padding-right">
                          <select id="changeType" class="btn-default">
-						 <option value="price">
-							金额
-                         </option>
-						 <option value="num">
-							数量
-                         </option>
+    						 <option value="price">
+    							金额
+                             </option>
+    						 <option value="num">
+    							数量
+                             </option>
+						 </select>
+						 <select id="yearNum" class="btn-default">
+    						 <option value="2018">
+    							2018
+                             </option>
+    						 <option value="2017">
+    							2017
+                             </option>
 						 </select>
 						</div>
 						<div class="col-md-4 no-padding-left margin-top-20 " style="float:right;">
@@ -146,7 +154,7 @@
     		
 	<div p_sortinfo="" p_isfirst="p_isLast=" p_currentpagenum="0" p_totalsize="0" p_endrow="0" p_totalpagesnum="0" p_pagesize="10" p_startrow="0" style="display:none" class="paginator"></div>
 
-</div>
+									</div>
 								 </div>
 								  <div id="processingData" class="tab-pane">
 									<div id="processingTable"></div>

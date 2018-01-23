@@ -55,6 +55,9 @@ $(document).ready(function(){
 	$.ajax({
 		type:"post",
 		url:"/echarts/getAllDate",
+		data:{
+			"yearNum":$("#yearNum").val()
+		},
 		success:function(msg){
 			allDate = msg;
 			myChart.hideLoading();
@@ -83,7 +86,22 @@ $("#changeType").change(function(){
 	}
 })
 
-
+$("#yearNum").change(function(){
+	$.ajax({
+		type:"post",
+		url:"/echarts/getAllDate",
+		data:{
+			"yearNum":$("#yearNum").val()
+		},
+		success:function(msg){
+			allDate = msg;
+			myChart.hideLoading();
+			option.xAxis[0].data = allDate.arrayX;
+			option.series[0].data = allDate.arrayY;
+			myChart.setOption(option);
+		}
+	});
+})
 
 //// 增加些数据------------------
 //option.legend.data.push('win');

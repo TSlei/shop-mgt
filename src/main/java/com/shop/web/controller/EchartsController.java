@@ -23,8 +23,8 @@ public class EchartsController {
 	}
 	@RequestMapping("/getAllDate")
 	@ResponseBody
-	public JSONObject getAllDate(){
-		JSONObject selectMonthTheSales = orderService.selectMonthTheSales();
+	public JSONObject getAllDate(Integer yearNum){
+		JSONObject selectMonthTheSales = orderService.selectMonthTheSales(yearNum);
 		return selectMonthTheSales;
 	}
 	

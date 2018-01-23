@@ -49,8 +49,8 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public JSONObject selectMonthTheSales() {
-		String[] monthDate = VelocityTool.getLast12Months();
+	public JSONObject selectMonthTheSales(Integer yearNum) {
+		String[] monthDate = VelocityTool.getLast12Months(yearNum);
 		Arrays.sort(monthDate);
 		List<Order> list = mapper.selectMonthTheSales(Arrays.asList(monthDate));
 		JSONObject obj = new JSONObject();

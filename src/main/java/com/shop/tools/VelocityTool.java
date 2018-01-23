@@ -98,17 +98,21 @@ public class VelocityTool {
 	 /** 
 	     * 获取最近12个月，经常用于统计图表的X轴 
 	     */  
-	    public static String[] getLast12Months(){  
-	          
-	        String[] last12Months = new String[12];  
-	          
-	        Calendar a=Calendar.getInstance();
-	        int j = a.get(Calendar.YEAR);
-	        for(int i=0; i<12; i++){  
-	        	last12Months[i] = j+""+ formatT((i + 1));
-	        }  
-	          
-	        return last12Months;  
+	    public static String[] getLast12Months(Integer yearNum){  
+	    	String[] last12Months = new String[12];  
+	        if(yearNum == null){
+		        Calendar a=Calendar.getInstance();
+		        int j = a.get(Calendar.YEAR);
+		        for(int i=0; i<12; i++){  
+		        	last12Months[i] = j+""+ formatT((i + 1));
+		        }  
+	        }else{
+		        for(int i=0; i<12; i++){  
+		        	last12Months[i] = yearNum+""+ formatT((i + 1));
+		        }
+	        }
+	        return last12Months; 
+	         
 	    } 
 	    
 	    public static String formatT(Integer i){

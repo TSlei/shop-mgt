@@ -23,5 +23,5 @@ public interface OrderService {
     
     Integer updateOrder(Order order);
     
-    JSONObject selectMonthTheSales();
+    JSONObject selectMonthTheSales(Integer yearNum);
 }
